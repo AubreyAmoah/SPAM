@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post("/signup", register);
 router.post("/signin", login);
-router.get("/refresh", authMiddleware, refreshMiddleware, handleRefreshToken);
-router.get("/logout", authMiddleware, refreshMiddleware, handleLogout);
+router.get("/refresh", refreshMiddleware, handleRefreshToken);
+router.get("/logout", refreshMiddleware, handleLogout);
 
 export default router;

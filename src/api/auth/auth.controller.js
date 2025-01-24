@@ -110,29 +110,32 @@ export async function handleRefreshToken(req, res) {
   try {
     const cookies = req.cookies;
 
-    if (!cookies?.jwt) return res.sendStatus(401);
+    if (!cookies?.jwt) return res.sendStatus(401); // Unauthorized
     const refreshToken = cookies.jwt;
 
-    const checkRefreshToken = compareRefreshToken(refreshToken);
+    // Check if the refresh token is valid (assuming compareRefreshToken is async)
+    const isValidToken = await compareRefreshToken(refreshToken);
+    if (!isValidToken) return res.status(404).json({ message: "Invalid Token" });
 
-    if (checkRefreshToken) {
-      jwt.verify(
-        refreshToken,
-        process.env.REFRESH_TOKEN_SECRET,
-        (err, decoded) => {
-          if (err || refreshToken.email !== decoded.email)
-            return res.sendStatus(401);
-          const accessToken = jwt.sign(
-            { email: decoded.email },
-            process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "1d" }
-          );
-          res.json({ accessToken });
+    // Verify the refresh token
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      (err, decoded) => {
+        if (err) {
+          console.error("Token verification failed:", err);
+          return res.sendStatus(401); // Unauthorized
         }
-      );
-    }
 
-    return res.status(404).json({ message: "Invalid Token" });
+        // Generate a new access token
+        const accessToken = jwt.sign(
+          { email: decoded.email },
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: "1d" }
+        );
+        return res.json({ accessToken });
+      }
+    );
   } catch (error) {
     console.error("Error during token refresh:", error);
     return res.status(500).json({
@@ -141,6 +144,7 @@ export async function handleRefreshToken(req, res) {
     });
   }
 }
+
 
 export async function handleLogout(req, res) {
   try {
