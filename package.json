@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "a student performance monitor",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "node --watch ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,10 +25,12 @@
   },
   "homepage": "https://github.com/AubreyAmoah/SPAM#readme",
   "dependencies": {
+    "@prisma/client": "^6.2.1",
     "argon2": "^0.41.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.5"
+    "prisma": "^6.2.1"
   }
 }

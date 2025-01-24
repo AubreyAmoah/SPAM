@@ -1,0 +1,18 @@
+###
+POST http://localhost:5500/auth/signup
+Content-Type: application/json
+
+{
+    "username": "aubrey",
+    "email": "aubrey@mail.com",
+    "password": "123456"
+}
+
+###
+POST http://localhost:5500/auth/signin
+Content-Type: application/json
+
+{
+    "username": "aubrey@mail.com",
+    "password": "123456"
+}
