@@ -4,7 +4,7 @@ import cors from "cors";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 
-import credentials from "./config/cors";
+import credentials from "./config/cors/middleware/credentials.js";
 import corsOptions from "./config/cors/corsOptions.js";
 
 import authMiddleware from "./middleware/authMiddleware.js";
