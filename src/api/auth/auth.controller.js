@@ -156,7 +156,7 @@ export async function handleLogout(req, res) {
 
     const checkRefreshToken = compareRefreshToken(refreshToken);
 
-    if (checkRefreshToken === "Refresh token found") {
+    if (checkRefreshToken) {
       const deleteToken = deleteRefreshToken(refreshToken);
 
       if (deleteToken === "Refresh token deleted") {
